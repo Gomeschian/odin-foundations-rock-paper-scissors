@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock, Paper...</title>
+</head>
+<body>
+    <script>
+        let playerWins=0;
+        let computerWins=0;
+        function computerPlay()
+        {
+            let randomNumber = Math.random()*12;
+            let computerThrows = "";
+            if (randomNumber <=3)
+            {
+                computerThrows = "ROCK";
+            } 
+            else if (randomNumber <=7)
+            {
+                computerThrows = "PAPER";
+            } 
+            else computerThrows = "SCISSORS";
+            return computerThrows;
+        }
+        function playRound(playerSelection=prompt("Rock, paper, scissors?"), computerSelection = computerPlay())
+        {
+            playerSelection = playerSelection.toUpperCase();
+            if  (playerSelection != "ROCK" && playerSelection != "PAPER" && playerSelection != "SCISSORS") 
+                {return "Invalid entry"}
+            if (playerSelection === computerSelection)
+                {return `${playerSelection} ties with ${computerSelection}!`} 
+            if (playerSelection === "ROCK") 
+            {
+                if (computerSelection === "PAPER")
+                {
+                    computerWins++;
+                    return `You Lose! ${computerSelection} beats ${playerSelection}!`
+                }
+                playerWins++;
+                return `You Win! ${playerSelection} beats ${computerSelection}!`
+                
+            }
+            if (playerSelection === "PAPER") 
+            {
+                if (computerSelection === "SCISSORS")
+                {
+                    computerWins++;
+                    return `You Lose! ${computerSelection} beats ${playerSelection}!`
+                }
+                playerWins++;
+                return `You Win! ${playerSelection} beats ${computerSelection}!`
+                
+            }
+            if (playerSelection === "SCISSORS") 
+            {
+                if (computerSelection === "ROCK")
+                {
+                    computerWins++;
+                    return `You Lose! ${computerSelection} beats ${playerSelection}!`
+                }
+                playerWins++;
+                return `You Win! ${playerSelection} beats ${computerSelection}!`
+            }
+        }
+        function game()
+        {
+            for (let x = 0; x < 5; x++ )
+            {
+               console.log(playRound());
+            }
+            if (playerWins > computerWins)
+            {return "The PLAYER wins the game!"}
+            if (playerWins === computerWins)
+            {return "It's a tie."}
+            return "The COMPUTER wins the game!"; 
+        }
+        playerWins = 0;
+        computerWins = 0;
+    </script>
+</body>
+</html>
