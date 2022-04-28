@@ -10,6 +10,8 @@
     <button id="rock">Rock?</button>
     <button id="paper">Paper</button>
     <button id="scissors">Scissors!</button>
+    <div class="playByPlay">
+    </div>
     
     <script>
         let playerWins=0;
@@ -17,11 +19,10 @@
         const rock = document.querySelector("#rock");
         const paper = document.querySelector("#paper");
         const scissors = document.querySelector("#scissors");
-        rock.addEventListener("click",playRound);
-        paper.addEventListener("click",playRound);
-        scissors.addEventListener("click",playRound);
-
-
+        rock.addEventListener("click",playGame);
+        paper.addEventListener("click",playGame);
+        scissors.addEventListener("click",playGame);
+        const playByPlay = document.querySelector(".playByPlay");
         function computerPlay()
         {
             let randomNumber = Math.random()*12;
@@ -37,61 +38,65 @@
             else computerThrows = "SCISSORS";
             return computerThrows;
         }
-        function playRound(e, computerSelection = computerPlay())
+
+        function playRound(e = event, computerSelection = computerPlay())
         {
-            playerSelection = event.target.toUpperCase();
+            playerSelection = e.target.getAttribute("id").toUpperCase();
             if  (playerSelection != "ROCK" && playerSelection != "PAPER" && playerSelection != "SCISSORS") 
-                {return "Invalid entry"}
-            if (playerSelection === computerSelection)
-                {return `${playerSelection} ties with ${computerSelection}!`} 
-            if (playerSelection === "ROCK") 
+                {roundResult.textContent = "Invalid entry"}
+            else if (playerSelection === computerSelection)
+                {roundResult.textContent = `${playerSelection} ties with ${computerSelection}!`} 
+            else if (playerSelection === "ROCK") 
             {
                 if (computerSelection === "PAPER")
                 {
                     computerWins++;
-                    return `You Lose! ${computerSelection} beats ${playerSelection}!`
+                    roundResult.textContent = `You Lose! ${computerSelection} beats ${playerSelection}!`
                 }
-                playerWins++;
-                return `You Win! ${playerSelection} beats ${computerSelection}!`
+                else playerWins++;
+                roundResult.textContent = `You Win! ${playerSelection} beats ${computerSelection}!`
                 
             }
-            if (playerSelection === "PAPER") 
+            else if (playerSelection === "PAPER") 
             {
                 if (computerSelection === "SCISSORS")
                 {
                     computerWins++;
-                    return `You Lose! ${computerSelection} beats ${playerSelection}!`
+                    roundResult.textContent = `You Lose! ${computerSelection} beats ${playerSelection}!`
                 }
-                playerWins++;
-                return `You Win! ${playerSelection} beats ${computerSelection}!`
+                else playerWins++;
+                roundResult.textContent = `You Win! ${playerSelection} beats ${computerSelection}!`
                 
             }
-            if (playerSelection === "SCISSORS") 
+            else if (playerSelection === "SCISSORS") 
             {
                 if (computerSelection === "ROCK")
                 {
                     computerWins++;
-                    return `You Lose! ${computerSelection} beats ${playerSelection}!`
+                    roundResult.textContent = `You Lose! ${computerSelection} beats ${playerSelection}!`
                 }
-                playerWins++;
-                return `You Win! ${playerSelection} beats ${computerSelection}!`
+               else playerWins++;
+                roundResult.textContent = `You Win! ${playerSelection} beats ${computerSelection}!`
             }
         }
-        /*function game()
-        {
-            for (let x = 0; x < 5; x++ )
+        function playGame(){
+            const roundResult = document.createElement("p");
+            playRound();
+            playByPlay.appendChild(roundResult);
+            playByPlay.textContent = `Player Score: ${playerWins} Computer Score: ${computerWins}`;
+            if (playerWins === 5 || computerWins === 5)
             {
-               console.log(playRound());
+                if (playerWins > computerWins)
+                {playByPlay.textContent += " The PLAYER wins the game!"}
+                else if (playerWins === computerWins)
+                {playByPlay.textContent += " It's a tie."}
+                else playByPlay.textContent += " The COMPUTER wins the game!"; 
+                playerWins = 0;
+                computerWins = 0;
             }
-            if (playerWins > computerWins)
-            {return "The PLAYER wins the game!"}
-            if (playerWins === computerWins)
-            {return "It's a tie."}
-            return "The COMPUTER wins the game!"; 
         }
-        playerWins = 0;
-        computerWins = 0;
-        */
+       
+   
     </script>
 </body>
 </html>
