@@ -11,6 +11,7 @@
     <button id="paper">Paper</button>
     <button id="scissors">Scissors!</button>
     <div class="playByPlay">
+        <p class="roundResult"></p>
     </div>
     
     <script>
@@ -23,6 +24,7 @@
         paper.addEventListener("click",playGame);
         scissors.addEventListener("click",playGame);
         const playByPlay = document.querySelector(".playByPlay");
+        const roundResult = document.querySelector(".roundResult");
         function computerPlay()
         {
             let randomNumber = Math.random()*12;
@@ -80,9 +82,7 @@
             }
         }
         function playGame(){
-            const roundResult = document.createElement("p");
             playRound();
-            playByPlay.appendChild(roundResult);
             playByPlay.textContent = `Player Score: ${playerWins} Computer Score: ${computerWins}`;
             if (playerWins === 5 || computerWins === 5)
             {
